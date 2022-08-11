@@ -7,27 +7,28 @@
 //   Typography,
 // } from "@mui/material";
 // import { Container, ThemeProvider } from "@mui/system";
-import React, { useState } from "react";
+import { Container } from "@mui/system";
 import BlogList from "../BlogList/BlogList";
+import useFetch from "../useFetch/useFetch";
 
 const Home = () => {
-  const [blogs, setBlogs] = useState([
-    {
-      title: "My new website",
-      body: "lorem ipsum....",
-      id: 1,
-      author: "Shohan",
-    },
-    { title: "Meat Party", body: "lorem ipsum....", id: 2, author: "Tabid" },
-    { title: "Coming Soon", body: "lorem ipsum....", id: 4, author: "Tabid" },
-    { title: "Developer Me", body: "lorem ipsum....", id: 3, author: "Sakib" },
-  ]);
+  const {
+    data: blogs,
+    isPending,
+    error,
+  } = useFetch("http://localhost:4000/blogs");
 
   //   const theme1 = createTheme({
   //     mt: 1,
   //     color: "orange",
   //     bgcolor: "warning.main",
   //   });
+
+  // const handleDelete = (id) => {
+  //   const newBlogs = blogs.filter((blog) => blog.id !== id);
+  //   setBlogs(newBlogs);
+  // };
+
   return (
     <div>
       {/* <Container maxWidth="xl">
@@ -43,12 +44,15 @@ const Home = () => {
       {/* <ThemeProvider theme={theme1}>
         
       </ThemeProvider> */}
-
-      <BlogList blogs={blogs} title="All Blogs!" />
-      <BlogList
+      <Container>
+        {error && <div>{error}</div>}
+        {isPending && <div>Loading...</div>}
+        {blogs && <BlogList blogs={blogs} key={blogs._id} title="All Blogs!" />}
+      </Container>
+      {/* <BlogList
         blogs={blogs.filter((blog) => blog.author === "Tabid")}
         title="Tabid's blogs"
-      />
+      /> */}
     </div>
   );
 };

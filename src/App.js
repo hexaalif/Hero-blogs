@@ -1,3 +1,6 @@
+import { Routes, Route } from "react-router-dom";
+import BlogDetails from "./Components/BlogList/BlogDetails";
+import CreateBlog from "./Components/BlogList/CreateBlog";
 import Home from "./Components/Home/Home";
 import Navbar from "./Components/Shared/Navbar/Navbar";
 
@@ -19,7 +22,12 @@ function App() {
   return (
     <div>
       <Navbar></Navbar>
-      <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Blog" element={<CreateBlog />} />
+        <Route path="/Blog/:id" element={<BlogDetails />} />
+      </Routes>
       {/* <h1>{title}</h1>
       <h3>love you {k}</h3>
       <h3>love you {"Allah"}</h3>
